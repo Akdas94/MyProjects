@@ -1,3 +1,4 @@
+#IF YOU WANT TO RUN THIS CODE, YOU CAN RUN IT ON 'GOOGLE COLAB' or ON ANY OTHER ONLINE COMPILER 
 !pip install --upgrade pandas-datareader
 !pip install --upgrade pandas
 import pandas as pd
@@ -30,7 +31,7 @@ df_micro
 df_Amazon = web.DataReader("AMZN", source, start, end)
 df_Amazon
 
-# With you this can add a new c 
+# With this you can add a new column in the data:
 df_Amazon["company_name"]='AMAZON'
 df_Amazon.head()
 
@@ -46,7 +47,7 @@ df_combined.shape
 df_combined["company_name"].unique()
 df_google.loc[:,"Volume"]
 
-#With the help of thebfollowing code you anaylse what was the change in stock price over time
+#With the help of the following code you can anaylse what was the change in stock price over time
 amzn = yf.download('AMZN',start,end)
 aapl = yf.download('AAPL',start,end)
 msft = yf.download('MSFT',start,end)
@@ -64,3 +65,41 @@ df_apple.shape
 df_apple.isnull().sum()
 df_apple.dropna(inplace = True, axis = 0)
 df_apple.dtypes
+
+#If you want to visualize any column, over time you can use the following code:
+#Here I am visualizing the change in a stock’s volume being traded, over time :
+plt.plot(df_google['Volume'])
+plt.xlabel('Time')
+plt.ylabel('Change in stock Volume')
+plt.legend("Google")
+plt.show()
+
+plt.plot(df_apple['Volume'])
+plt.xlabel('Time')
+plt.ylabel('Change in stock Volume')
+plt.legend("Apple")
+plt.show()
+
+plt.plot(df_micro['Volume'])
+plt.xlabel('Time')
+plt.ylabel('Change in stock Volume')
+plt.legend("Microsoft")
+plt.show()
+
+plt.plot(df_Amazon['Volume'])
+plt.xlabel('Time')
+plt.ylabel('Change in stock Volume')
+plt.legend("Amazon")
+plt.show()
+
+#If you want to add Daily Return Average of a stock, there a formula for that:
+#Here I am taking Amazon for example:
+type(df_Amazon.index)
+df_Amazon['Close'].count()
+maximum_price = df_Amazon['Close'].max()
+print(maximum_price)
+df_Amazon.Close[df_Amazon.Close == maximum_price].index
+
+df_Amazon['Daily_Return'] = df_Amazon['Close'].pct_change()*100
+df_Amazon.head()
+df_Amazon
